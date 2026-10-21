@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="SchemaCanvas: a browser-based studio for Chen ER diagrams, horizontal relational schemas, and SQL, with ER-to-relational conversion and validation." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23245fa8'/%3E%3Ctext x='16' y='23' font-family='sans-serif' font-size='20' font-weight='700' text-anchor='middle' fill='white'%3ES%3C/text%3E%3Cpath d='M9 27h14' stroke='white' stroke-width='2'/%3E%3C/svg%3E" />
+    <title>SchemaCanvas</title>
+    <!-- Pre-paint theme: same rule as applyThemeNow() (src/ui/theme/useResolvedTheme.ts), so the first paint is not the wrong theme while the bundle loads. -->
+    <script>
+      (function () {
+        try {
+          var t = JSON.parse(localStorage.getItem('schemacanvas:settings:v1') || '{}').theme;
+          var dark = t === 'dark' || (t !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

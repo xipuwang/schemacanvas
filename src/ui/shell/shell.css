@@ -1,0 +1,830 @@
+/* Application chrome. Tokens only. Layout per docs/DESIGN.md. */
+.shell {
+  display: grid;
+  grid-template-rows: var(--toolbar-h) minmax(0, 1fr) var(--status-h);
+  height: 100dvh;
+  width: 100%;
+  background: var(--bench);
+  color: var(--ink);
+  overflow: hidden;
+}
+.shell-skip {
+  position: fixed;
+  left: var(--space-2);
+  top: -48px;
+  z-index: 100;
+  padding: var(--space-2) var(--space-3);
+  background: var(--ink);
+  color: var(--panel-raised);
+  border-radius: var(--radius-control);
+  text-decoration: none;
+}
+.shell-skip:focus-visible {
+  top: var(--space-2);
+}
+.shell-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sheet);
+}
+
+/* ---- toolbar ---- */
+.shell-header {
+  background: var(--panel);
+  border-bottom: 1px solid var(--rule);
+  min-width: 0;
+}
+.shell-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 100%;
+  padding: 0 var(--space-3);
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* a thin visible scrollbar (only when the toolbar overflows, ~700-855 px or high zoom) so mouse-only users can reach every control */
+  scrollbar-width: thin;
+}
+.shell-toolbar::-webkit-scrollbar {
+  height: 6px;
+}
+.shell-toolbar::-webkit-scrollbar-thumb {
+  background: var(--rule-strong);
+  border-radius: 3px;
+}
+.shell-toolbar > * {
+  flex-shrink: 0;
+}
+.shell-tb-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.shell-tb-spacer {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.shell-wordmark {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-md);
+  letter-spacing: 0;
+  margin-right: var(--space-3);
+  white-space: nowrap;
+  /* underline = key: the brand carries the notation */
+  text-decoration: underline;
+  text-decoration-color: var(--key);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.shell-wordmark span {
+  font-weight: var(--weight-regular);
+  color: var(--ink-2);
+}
+.shell-toolbar .sc-sep-vertical {
+  height: 20px;
+  align-self: center;
+  margin: 0 var(--space-2);
+}
+.shell-toolbar .sc-iconbtn.has-caret {
+  width: auto;
+  padding: 0 4px 0 6px;
+  gap: 2px;
+}
+@media (max-width: 1200px) {
+  .shell-wordmark {
+    display: none;
+  }
+}
+
+/* ---- workspace ---- */
+.shell-workspace {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+  background: var(--bench);
+}
+.shell-dock {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--panel);
+}
+.shell-dock-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+.shell-center {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+}
+.shell-canvas-wrap {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  background: var(--sheet);
+  overflow: hidden;
+}
+.shell-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* ---- resizers ---- */
+.shell-resizer {
+  position: relative;
+  flex: none;
+  background: var(--rule);
+  touch-action: none;
+  z-index: 2;
+}
+.shell-resizer::before {
+  content: '';
+  position: absolute;
+}
+.shell-resizer-vertical {
+  width: 1px;
+  cursor: col-resize;
+}
+.shell-resizer-vertical::before {
+  inset: 0 -3px;
+}
+.shell-resizer-horizontal {
+  height: 1px;
+  cursor: row-resize;
+}
+.shell-resizer-horizontal::before {
+  inset: -3px 0;
+}
+.shell-resizer:hover,
+.shell-resizer:focus-visible {
+  background: var(--fk);
+  box-shadow: 0 0 0 1px var(--fk);
+}
+
+/* ---- sheet tabs ---- */
+.shell-tabs {
+  display: flex;
+  align-items: stretch;
+  height: var(--tabs-h);
+  flex: none;
+  background: var(--panel);
+  border-bottom: 1px solid var(--rule);
+  padding-right: var(--space-2);
+  min-width: 0;
+}
+.shell-tablist {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+.shell-tablist::-webkit-scrollbar {
+  display: none;
+}
+.shell-tab {
+  font: inherit;
+  font-size: var(--text-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+  max-width: 220px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-right: 1px solid var(--rule);
+  /* the active sheet is underlined in key-gold, like a primary key */
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.shell-tab:hover {
+  background: var(--hover);
+  color: var(--ink);
+}
+.shell-tab.is-active {
+  background: var(--sheet);
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+  border-bottom-color: var(--key);
+}
+.shell-tab:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--fk);
+}
+.shell-tab-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.shell-tab-input {
+  font: inherit;
+  font-size: var(--text-sm);
+  align-self: center;
+  width: 180px;
+  height: 24px;
+  margin: 0 var(--space-2);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--fk);
+  border-radius: var(--radius-control);
+  background: var(--panel-raised);
+  color: var(--ink);
+}
+.shell-tab-add {
+  align-self: center;
+  margin-left: var(--space-1);
+  flex: none;
+}
+
+/* ---- bottom dock ---- */
+.shell-bottom {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--panel);
+}
+.shell-bottom-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  height: 30px;
+  padding: 0 var(--space-2) 0 0;
+  border-bottom: 1px solid var(--rule);
+}
+.shell-dock-tabs {
+  display: flex;
+  height: 100%;
+}
+.shell-dock-tab {
+  font: inherit;
+  font-size: var(--text-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.shell-dock-tab.is-active {
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+  border-bottom-color: var(--key);
+}
+.shell-dock-tab:hover {
+  background: var(--hover);
+}
+.shell-bottom-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* ---- drawers (medium / narrow) ---- */
+.shell-drawer {
+  position: absolute;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border: 0 solid var(--rule);
+  box-shadow: var(--shadow-pop);
+  outline: none;
+  animation: shell-slide var(--motion-fast) var(--motion-ease);
+}
+.shell-drawer-left {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  max-width: 86%;
+  border-right-width: 1px;
+}
+.shell-drawer-right {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  max-width: 86%;
+  border-left-width: 1px;
+}
+.shell-drawer-sheet {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 44%;
+  border-top-width: 1px;
+  border-radius: var(--radius-popover) var(--radius-popover) 0 0;
+  animation-name: shell-rise;
+}
+.shell-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  height: 36px;
+  padding: 0 var(--space-2) 0 var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+.shell-drawer-title {
+  margin: 0;
+  font-size: inherit;
+  font-weight: var(--weight-medium);
+}
+@keyframes shell-slide {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+}
+@keyframes shell-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* ---- status bar ---- */
+.shell-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: var(--status-h);
+  padding: 0 var(--space-3);
+  background: var(--panel);
+  border-top: 1px solid var(--rule);
+  font-size: var(--text-xs);
+  color: var(--ink-2);
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.shell-status-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.shell-num {
+  font-variant-numeric: tabular-nums;
+}
+.shell-status-btn {
+  font: inherit;
+  font-size: var(--text-xs);
+  height: 20px;
+  padding: 0 var(--space-2);
+  gap: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.shell-status-btn:hover,
+.shell-status-btn.is-on {
+  background: var(--hover);
+  color: var(--ink);
+}
+.shell-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.shell-count.is-error {
+  color: var(--danger);
+}
+.shell-count.is-warning {
+  color: var(--warning);
+}
+.shell-count.is-info {
+  color: var(--info);
+}
+.shell-persist.is-ok {
+  color: var(--success);
+}
+.shell-persist.is-warn {
+  color: var(--warning);
+}
+.shell-persist.is-bad {
+  color: var(--danger);
+}
+.shell-persist span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- command palette ---- */
+.shell-palette {
+  width: 100%;
+  max-width: 560px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-popover);
+  box-shadow: var(--shadow-pop);
+  overflow: hidden;
+  animation: sc-pop var(--motion-fast) var(--motion-ease);
+}
+.shell-palette-input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  height: 44px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+}
+.shell-palette-input input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: var(--text-md);
+  color: var(--ink);
+}
+.shell-palette-input input:focus-visible {
+  box-shadow: none;
+}
+.shell-palette-input:focus-within {
+  box-shadow: inset 0 -2px 0 var(--fk);
+}
+.shell-palette-list {
+  overflow: auto;
+  padding: var(--space-1);
+}
+.shell-palette-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 32px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  font-size: var(--text-sm);
+}
+.shell-palette-item[aria-selected='true'] {
+  background: var(--selected-row);
+  box-shadow: inset 0 0 0 1px var(--fk);
+}
+.shell-palette-group {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+.shell-palette-empty {
+  margin: 0;
+  padding: var(--space-4);
+  text-align: center;
+  color: var(--ink-3);
+}
+
+/* ---- dialogs content ---- */
+.shell-p {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-sm);
+  line-height: var(--lh-md);
+  overflow-wrap: anywhere;
+}
+.shell-p:last-child {
+  margin-bottom: 0;
+}
+.shell-muted {
+  color: var(--ink-3);
+}
+.shell-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.sc-dialog-footer .shell-tb-spacer {
+  flex: 1;
+}
+.shell-shortcuts {
+  margin-top: var(--space-3);
+  max-height: 52vh;
+  overflow: auto;
+  columns: 2 280px;
+  column-gap: var(--space-5);
+}
+.shell-shortcut-group {
+  break-inside: avoid;
+  margin-bottom: var(--space-4);
+}
+.shell-shortcut-group h3,
+.shell-settings h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-sm);
+  line-height: var(--lh-sm);
+  font-weight: var(--weight-bold);
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--rule);
+}
+.shell-shortcut-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.shell-shortcut-group li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 26px;
+  font-size: var(--text-sm);
+}
+.shell-shortcut-keys {
+  display: inline-flex;
+  gap: var(--space-1);
+  flex: none;
+}
+.shell-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+.shell-settings section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.shell-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.shell-setting-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.shell-setting-number {
+  max-width: 140px;
+}
+.shell-settings .sc-btn {
+  align-self: flex-start;
+}
+
+/* ---- file drop overlay ---- */
+.shell-drop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--fk) 14%, transparent);
+  outline: 2px dashed var(--fk);
+  outline-offset: -8px;
+  pointer-events: none;
+}
+.shell-drop-box {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--panel-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-popover);
+  box-shadow: var(--shadow-pop);
+  font-size: var(--text-md);
+}
+
+/* ---- narrow ---- */
+@media (max-width: 700px) {
+  .shell-toolbar {
+    padding: 0 var(--space-2);
+  }
+  .shell-status {
+    gap: var(--space-3);
+    padding: 0 var(--space-2);
+  }
+  .shell-tab {
+    padding: 0 var(--space-3);
+    max-width: 160px;
+  }
+  .shell-shortcuts {
+    columns: 1;
+  }
+  .shell-status [data-testid='status-selection'] {
+    display: none;
+  }
+}
+
+/* ---- tab reordering ---- */
+.shell-tab {
+  position: relative;
+  touch-action: pan-x;
+}
+.shell-tab.is-dragging {
+  z-index: 3;
+  cursor: grabbing;
+  background: var(--panel-raised);
+  box-shadow: var(--shadow-pop);
+  opacity: 0.92;
+}
+.shell-tab.is-drop-before::before,
+.shell-tab.is-drop-after::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--fk);
+  pointer-events: none;
+}
+.shell-tab.is-drop-before::before {
+  left: -2px;
+}
+.shell-tab.is-drop-after::after {
+  right: -2px;
+}
+
+/* ---- project name (toolbar) ---- */
+.shell-file-btn,
+.shell-type-btn {
+  gap: var(--space-1);
+}
+.shell-type-label {
+  margin-right: var(--space-1);
+}
+/* the medium layout's toolbar is full: the type control shrinks to its icon + caret (the tab strip names the type) */
+@media (max-width: 1099px) {
+  .shell-type-label {
+    display: none;
+  }
+}
+.shell-project-name,
+.shell-project-input {
+  font: inherit;
+  font-size: var(--text-md);
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 220px;
+  height: 28px;
+  margin-right: var(--space-2);
+}
+.shell-project-name {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+  cursor: text;
+}
+.shell-project-name span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.shell-project-name:hover {
+  border-color: var(--rule);
+  background: var(--hover);
+}
+.shell-project-name:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.shell-project-input {
+  width: 200px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--fk);
+  border-radius: var(--radius-control);
+  background: var(--panel-raised);
+  color: var(--ink);
+}
+
+/* ---- welcome (empty sheet) ---- */
+.shell-welcome {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% + 28px);
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--space-4);
+  pointer-events: none;
+}
+.shell-welcome-card {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 100%;
+}
+.shell-welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+}
+.shell-welcome-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--ink-3);
+}
+
+/* ---- toasts vs dialogs / narrow screens ---- */
+.shell .sc-toasts.is-top {
+  top: var(--space-2);
+  bottom: auto;
+}
+/* the bottom sheet owns the lower part of a phone screen: toasts ride at the top edge, below the toolbar */
+.shell[data-sheet-open] .sc-toasts {
+  top: calc(var(--toolbar-h) + var(--space-1));
+  bottom: auto;
+}
+@media (max-width: 700px) {
+  .shell .sc-toasts {
+    left: var(--space-2);
+    right: var(--space-2);
+    max-width: none;
+  }
+  /* narrow: a dialog fills the screen, so toasts ride above its footer actions at the top edge */
+  .shell .sc-toasts.is-top {
+    top: var(--space-1);
+  }
+  .shell-welcome {
+    top: calc(50% + 44px);
+  }
+  .shell-welcome-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .shell-project-name,
+  .shell-project-input {
+    max-width: 120px;
+    margin-right: 0;
+  }
+  .shell-project-input {
+    width: 120px;
+  }
+}
+.sc-toast-action {
+  align-self: center;
+  flex: none;
+  white-space: nowrap;
+}
+
+/*
+ * The editor's canvas context menu styles a global `.sc-menu` (position: fixed, max-width 320). The menus built by the
+ * shared Menu component put the same class inside `.sc-menu-layer`, which made them leave the layer (a 2x2 box), so Layer
+ * could not measure them and clamp them into the viewport. Inside a layer the menu is an ordinary in-flow block.
+ */
+.sc-menu-layer > .sc-menu {
+  position: static;
+  z-index: auto;
+  max-width: none;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: inherit;
+}
+/* Layer measures the menu BEFORE it applies max-height; reserve the scrollbar so a scrolling menu keeps its measured width
+   (otherwise the scrollbar widens it after placement and it pokes out past the right edge). */
+.sc-menu-layer {
+  scrollbar-gutter: stable;
+}
+/* A menu never grows wider than the screen: long labels are cut with an ellipsis instead of pushing it off the right edge. */
+.sc-menu-layer {
+  max-width: calc(100vw - 16px);
+}
+.sc-menu-layer .sc-menu-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Auto-layout running (ELK in a worker): the spinner replaces the glyph, the button keeps its footprint. */
+.shell-layout-busy > svg:first-child { display: none; }
+.shell-layout-busy .shell-layout-spinner { display: inline-flex; }
+.shell-layout-busy:disabled { opacity: 1; cursor: progress; }

@@ -1,0 +1,13 @@
+export { AppShell } from './AppShell';
+export { startApp } from './startup';
+export { registerPanel, registerDock, type PanelSlot, type DockSlot } from './slots';
+export { registerShellCommands, togglePanel, isPanelShown } from './commands';
+export { confirmDialog, type ConfirmOptions } from './confirm';
+export { runValidation, validateActiveModel, startLiveValidation } from './validation';
+export { shellStore, useShell, type ShellState } from './shellStore';
+export { useLayoutMode, type LayoutMode } from './layout';
+export { createDiagramAndActivate, duplicateDiagram, deleteDiagramWithConfirm } from './SheetTabs';
+export { openProjectFile, saveProjectFile, createNewProject } from './files';
+export { registerShellDialogs } from './dialogs';
+export { replaceProject, projectHasContent, type ReplaceOptions, type ReplaceResult } from './replace';
+export { registerRecentDialog } from '../dialogs/recent';

@@ -1,0 +1,237 @@
+/* Chrome of the interactive canvas. Colours come ONLY from src/ui/theme/tokens.css variables. */
+.sc-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--sheet);
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: var(--font-ui);
+}
+.sc-canvas:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--fk);
+}
+.sc-canvas__svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+.sc-canvas__empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: var(--space-5);
+  text-align: center;
+  color: var(--ink-3);
+  font-size: var(--text-md);
+  line-height: var(--lh-md);
+}
+.sc-canvas__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.sc-inline-input {
+  position: absolute;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 var(--space-1);
+  border: 1.5px solid var(--fk);
+  border-radius: var(--radius-control);
+  background: var(--panel-raised);
+  color: var(--ink);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fk) 28%, transparent);
+  user-select: text;
+  -webkit-user-select: text;
+}
+.sc-menu {
+  position: fixed;
+  z-index: 1000;
+  min-width: 200px;
+  max-width: 320px;
+  padding: var(--space-1);
+  margin: 0;
+  background: var(--panel-raised);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-popover);
+  box-shadow: var(--shadow-pop);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  line-height: var(--lh-sm);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.sc-menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: var(--control-h);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: default;
+}
+.sc-menu__item:hover:not(:disabled),
+.sc-menu__item:focus-visible {
+  background: var(--selected-row);
+  outline: none;
+}
+.sc-menu__item:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--fk);
+}
+.sc-menu__item:disabled {
+  color: var(--ink-3);
+  opacity: 0.7;
+}
+.sc-menu__label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.sc-menu__check {
+  width: 14px;
+  flex: none;
+  color: var(--key-ink);
+}
+.sc-menu__shortcut {
+  flex: none;
+  color: var(--ink-3);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+}
+.sc-menu__sep {
+  height: 1px;
+  margin: var(--space-1) var(--space-2);
+  background: var(--rule);
+  border: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sc-menu {
+    animation: sc-menu-in var(--motion-fast) var(--motion-ease);
+  }
+  @keyframes sc-menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+/* ---- symbol hints (canvas tooltips) ---- */
+.sc-tip {
+  position: absolute;
+  z-index: 30;
+  transform: translate(-50%, 18px);
+  max-width: 260px;
+  padding: 6px 10px;
+  border-radius: var(--radius-control);
+  background: var(--ink);
+  color: var(--panel-raised);
+  font-size: var(--text-xs);
+  line-height: var(--lh-xs);
+  box-shadow: var(--shadow-pop);
+  pointer-events: none;
+  user-select: none;
+}
+.sc-tip[data-above] {
+  transform: translate(-50%, calc(-100% - 14px));
+}
+
+/* ---- text alternative: skip link + diagram outline (hidden until focused) ---- */
+.sc-skip,
+.sc-outline {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 40;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.sc-skip:focus,
+.sc-skip:focus-visible {
+  width: auto;
+  height: auto;
+  padding: var(--space-1) var(--space-3);
+  overflow: visible;
+  clip-path: none;
+  background: var(--panel-raised);
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-control);
+  font: inherit;
+  font-size: var(--text-sm);
+  box-shadow: var(--focus-ring);
+}
+.sc-outline:focus-within {
+  width: min(420px, calc(100% - 2 * var(--space-2)));
+  height: auto;
+  max-height: calc(100% - 2 * var(--space-2));
+  padding: var(--space-3);
+  overflow: auto;
+  clip-path: none;
+  white-space: normal;
+  background: var(--panel-raised);
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-popover);
+  box-shadow: var(--shadow-pop);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  line-height: var(--lh-sm);
+}
+.sc-outline h2 {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-md);
+}
+.sc-outline h3 {
+  margin: var(--space-3) 0 var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+.sc-outline p {
+  margin: 0 0 var(--space-2);
+  color: var(--ink-3);
+}
+.sc-outline ul {
+  margin: 0;
+  padding-left: var(--space-4);
+  list-style: disc;
+}
+.sc-outline__item {
+  all: unset;
+  cursor: pointer;
+  color: var(--fk-ink);
+  text-decoration: underline;
+  border-radius: var(--radius-control);
+}
+.sc-outline__item:focus-visible {
+  box-shadow: var(--focus-ring);
+}

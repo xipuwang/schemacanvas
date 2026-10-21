@@ -1,0 +1,185 @@
+/* Issues dock. Tokens only; severity colours are the canvas halo colours. */
+.issues-dock {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  font-size: var(--text-sm);
+  line-height: var(--lh-sm);
+}
+.issues-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: var(--panel);
+  border-bottom: 1px solid var(--rule);
+}
+.issues-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.issues-chip {
+  font: inherit;
+  font-size: var(--text-xs);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.issues-chip:hover {
+  background: var(--hover);
+}
+.issues-chip[aria-pressed='true'] {
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+}
+.issues-chip-error[aria-pressed='true'] {
+  background: var(--danger-tint);
+  border-color: var(--danger);
+}
+.issues-chip-warning[aria-pressed='true'] {
+  background: var(--warning-tint);
+  border-color: var(--warning);
+}
+.issues-chip-info[aria-pressed='true'] {
+  background: var(--info-tint);
+  border-color: var(--info);
+}
+.issues-chip-error svg {
+  color: var(--danger);
+}
+.issues-chip-warning svg {
+  color: var(--warning);
+}
+.issues-chip-info svg {
+  color: var(--info);
+}
+.issues-chip-count {
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-bold);
+}
+.issues-head-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.issues-empty {
+  flex: 1;
+}
+.issues-none-shown {
+  margin: 0;
+  padding: var(--space-4) var(--space-3);
+  color: var(--ink-3);
+}
+.issues-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.issues-item {
+  border-bottom: 1px solid var(--rule);
+  border-left: 3px solid transparent;
+}
+.issues-item-error {
+  border-left-color: var(--danger);
+}
+.issues-item-warning {
+  border-left-color: var(--warning);
+}
+.issues-item-info {
+  border-left-color: var(--info);
+}
+.issues-item.is-open {
+  background: var(--selected-row);
+}
+.issue-row {
+  font: inherit;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  padding: 6px var(--space-3) 6px var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  text-align: start;
+  cursor: pointer;
+}
+.issue-row:hover {
+  background: var(--hover);
+}
+.issue-row:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--fk);
+}
+.issue-icon {
+  flex: none;
+  margin-top: 1px;
+}
+.issue-icon-error {
+  color: var(--danger);
+}
+.issue-icon-warning {
+  color: var(--warning);
+}
+.issue-icon-info {
+  color: var(--info);
+}
+.issue-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--space-3);
+  min-width: 0;
+}
+.issue-title {
+  font-weight: var(--weight-medium);
+  overflow-wrap: anywhere;
+}
+.issue-refs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.issue-ref {
+  font-family: var(--font-code);
+  font-size: 11.5px;
+  padding: 0 5px;
+  border-radius: var(--radius-control);
+  background: var(--hover);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+.issue-ref-more {
+  font-family: var(--font-ui);
+}
+.issue-detail {
+  padding: 0 var(--space-3) var(--space-2) 34px;
+}
+.issue-detail p {
+  margin: 0 0 var(--space-2);
+  overflow-wrap: anywhere;
+}
+.issue-sugg {
+  color: var(--ink-2);
+}
+.issue-note {
+  color: var(--ink-3);
+}
+@media (max-width: 700px) {
+  .issue-detail {
+    padding-left: var(--space-4);
+  }
+}

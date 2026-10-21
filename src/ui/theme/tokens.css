@@ -1,0 +1,123 @@
+/*
+ * SchemaCanvas design tokens — the contract between the shell and every panel/dialog.
+ * See docs/DESIGN.md. Use ONLY these variables for chrome colours (no hard-coded hex in components).
+ * The diagram sheet itself is drawn with render/palette.ts (concrete colours); these tokens style the chrome around it.
+ * Theme switch: <html data-theme="light|dark">; `system` is resolved to one of them by the shell.
+ */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --font-ui: 'Atkinson Hyperlegible Next Variable', 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  --font-code: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* type scale (px): dense but readable; line-heights are tuned per size */
+  --text-xs: 12px;
+  --lh-xs: 16px;
+  --text-sm: 13px;
+  --lh-sm: 18px;
+  --text-md: 14px;
+  --lh-md: 20px;
+  --text-lg: 16px;
+  --lh-lg: 22px;
+  --text-xl: 20px;
+  --lh-xl: 26px;
+  --weight-regular: 400;
+  --weight-medium: 560;
+  --weight-bold: 700;
+
+  /* spacing: 4px base */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius-control: 3px;
+  --radius-popover: 6px;
+  --control-h: 28px; /* default control height; --control-h-lg for primary dialog buttons */
+  --control-h-lg: 34px;
+  --toolbar-h: 44px;
+  --tabs-h: 34px;
+  --status-h: 26px;
+
+  /* surfaces: tonal steps instead of shadows */
+  --bench: #e4e9ec; /* workspace surround, gaps between docks */
+  --panel: #f3f5f6; /* docked panels */
+  --panel-raised: #fafbfb; /* inputs, menus, dialogs */
+  --sheet: #ffffff; /* the canvas */
+  --ink: #16202a; /* primary text — never pure black */
+  --ink-2: #44505c; /* secondary text */
+  --ink-3: #5f6b77; /* muted text (>= 4.5:1 on panel) */
+  --rule: #cdd5db; /* 1px dividers */
+  --rule-strong: #aeb9c2; /* input borders */
+  --hover: rgb(22 32 42 / 0.06);
+  --pressed: rgb(22 32 42 / 0.12);
+
+  /* notation colours reused by the chrome (underline = key, italic = foreign key) */
+  --key: #f0b400; /* key-gold: active tab underline, toggled-on controls, PK marks */
+  --key-tint: #fef3c7;
+  --key-ink: #6a4b00;
+  --fk: #2b8fd6; /* fk-sky: focus ring, selected rows, links */
+  --fk-tint: #e0f2fe;
+  --fk-ink: #0b4f7c;
+  --selected-row: #e3f0fa;
+
+  --danger: #c92a2a;
+  --danger-tint: #fdeaea;
+  --warning: #8a5a00;
+  --warning-tint: #fff1d1;
+  --info: #0b7285;
+  --info-tint: #dff4f7;
+  --success: #25794f;
+  --success-tint: #e1f4ea;
+
+  --focus-ring: 0 0 0 2px var(--sheet), 0 0 0 4px var(--fk);
+  --shadow-pop: 0 10px 30px rgb(16 22 28 / 0.18), 0 1px 3px rgb(16 22 28 / 0.14);
+
+  --motion-fast: 120ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bench: #0b1015;
+  --panel: #151c23;
+  --panel-raised: #1c252e;
+  --sheet: #0f141a; /* == darkPalette.background */
+  --ink: #e5e9f0;
+  --ink-2: #b7c1cb;
+  --ink-3: #93a0ad;
+  --rule: #28323d;
+  --rule-strong: #3d4a58;
+  --hover: rgb(229 233 240 / 0.07);
+  --pressed: rgb(229 233 240 / 0.14);
+
+  --key: #f2b705;
+  --key-tint: #4a3c12;
+  --key-ink: #f6d36b;
+  --fk: #5cb0ee;
+  --fk-tint: #123246;
+  --fk-ink: #9ed3f6;
+  --selected-row: #17354a;
+
+  --danger: #ff7b7b;
+  --danger-tint: #3a1d1f;
+  --warning: #f0b84a;
+  --warning-tint: #3a2e12;
+  --info: #4fc6d9;
+  --info-tint: #123239;
+  --success: #5cc48c;
+  --success-tint: #14301f;
+
+  --focus-ring: 0 0 0 2px var(--panel), 0 0 0 4px var(--fk);
+  --shadow-pop: 0 12px 34px rgb(0 0 0 / 0.55), 0 1px 3px rgb(0 0 0 / 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+  }
+}

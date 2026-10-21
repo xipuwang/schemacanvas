@@ -1,0 +1,43 @@
+import { defineMessages } from '../core';
+
+/** Labels of the commands the shell registers (namespace `commands`, key = dotted command id). */
+export default defineMessages('commands', {
+  en: {
+    'file.new': 'New project',
+    'file.open': 'Open project file',
+    'file.save': 'Save project file',
+    'file.export': 'Export diagram',
+    'file.import': 'Import',
+    'file.examples': 'Open an example',
+    'file.recent': 'Recent projects',
+    'diagram.validate': 'Validate model',
+    'diagram.convert': 'Convert to relational schema',
+    'diagram.options': 'Diagram options',
+    'help.shortcuts': 'Keyboard shortcuts',
+    'help.about': 'About SchemaCanvas',
+    settings: 'Settings',
+    'palette.open': 'Command palette',
+    'view.togglePanel.library': 'Show parts library',
+    'view.togglePanel.properties': 'Show properties',
+    'view.togglePanel.issues': 'Show issues',
+  },
+  zh: {
+    'file.new': '新建项目',
+    'file.open': '打开项目文件',
+    'file.save': '保存项目文件',
+    'file.export': '导出图表',
+    'file.import': '导入',
+    'file.examples': '打开示例',
+    'file.recent': '最近的项目',
+    'diagram.validate': '检查模型',
+    'diagram.convert': '转换为关系模式',
+    'diagram.options': '图表选项',
+    'help.shortcuts': '键盘快捷键',
+    'help.about': '关于 SchemaCanvas',
+    settings: '设置',
+    'palette.open': '命令面板',
+    'view.togglePanel.library': '显示组件库',
+    'view.togglePanel.properties': '显示属性',
+    'view.togglePanel.issues': '显示问题',
+  },
+});
